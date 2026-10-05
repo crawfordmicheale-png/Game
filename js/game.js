@@ -189,22 +189,49 @@
         renderDetail();
       })
     );
-    $('#rename').addEventListener('click', () => {
-      const name = prompt('Name your creature:', c.nickname);
-      if (name && name.trim()) {
-        c.nickname = name.trim().slice(0, 20);
-        save();
-        render();
-      }
-    });
-    $('#release').addEventListener('click', () => {
-      if (confirm(`Release ${c.nickname}? This cannot be undone.`)) {
-        state.creatures = state.creatures.filter((x) => x !== c);
-        state.selected = state.creatures[0] ? state.creatures[0].id : null;
-        save();
-        render();
-      }
-    });
+    // In-page dialogs: browser prompt()/confirm() are blocked in some hosts.
+    $('#rename').addEventListener('click', () =>
+      showModal(
+        `<form class="hatch" id="rename-form">
+          <h2>Rename ${esc(c.nickname)}</h2>
+          <input id="rename-input" maxlength="20" value="${esc(c.nickname)}"/>
+          <div class="dialog-btns"><button type="button" id="rename-cancel">Cancel</button><button class="primary" type="submit">Save</button></div>
+        </form>`,
+        (root) => {
+          const input = root.querySelector('#rename-input');
+          input.focus();
+          input.select();
+          root.querySelector('#rename-cancel').addEventListener('click', closeModal);
+          root.querySelector('#rename-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = input.value.trim();
+            if (name) {
+              c.nickname = name.slice(0, 20);
+              save();
+            }
+            closeModal();
+          });
+        }
+      )
+    );
+    $('#release').addEventListener('click', () =>
+      showModal(
+        `<div class="hatch">
+          <h2>Release ${esc(c.nickname)}?</h2>
+          <p>It will return to the wild for good. This can't be undone.</p>
+          <div class="dialog-btns"><button id="release-cancel">Keep it</button><button class="danger-btn" id="release-ok">Release</button></div>
+        </div>`,
+        (root) => {
+          root.querySelector('#release-cancel').addEventListener('click', closeModal);
+          root.querySelector('#release-ok').addEventListener('click', () => {
+            state.creatures = state.creatures.filter((x) => x !== c);
+            state.selected = state.creatures[0] ? state.creatures[0].id : null;
+            save();
+            closeModal();
+          });
+        }
+      )
+    );
     if (c.event) {
       $('#ev-scold').addEventListener('click', () => {
         toast(CF.resolveEvent(c, 'scold'));

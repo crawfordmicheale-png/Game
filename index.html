@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wildbrood</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>🥚 Wildbrood</h1>
+      <div class="top-actions">
+        <button id="hatch-btn">🥚 Hatch Egg</button>
+        <button id="codex-btn">📖 Codex <span id="codex-count" class="small"></span></button>
+        <button id="help-btn">❔ How to play</button>
+        <button id="endday-btn" class="primary">🌙 End Day</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside id="roster" class="roster"></aside>
+      <section id="detail" class="detail"></section>
+    </main>
+
+    <div id="modal" class="modal hidden"><div id="modal-card" class="modal-card"></div></div>
+    <div id="toast" class="toast"></div>
+
+    <template id="help-template">
+      <div class="help">
+        <div class="codex-head"><h2>How to play</h2><button class="link" id="help-close">Close ✕</button></div>
+        <p><strong>Hatch</strong> random eggs (up to 4 at once). There are 6 hatchlings; each has an element and a slight natural leaning, but
+          <em>you</em> decide what it becomes.</p>
+        <h3>Raising</h3>
+        <ul>
+          <li>Each creature gets 4 actions a day: feed, bathe, nap, play and train. Then press <strong>End Day</strong>.</li>
+          <li><strong>Training</strong> builds one of six traits: Might, Swift, Wit, Heart, Guard, Fury. The trait you've focused on most
+            (recent growth counts double) decides its body type.</li>
+          <li><strong>Discipline</strong>: creatures misbehave. Scold them, or let it slide. Proper meals build discipline; treats spoil it.
+            Ignoring misbehaviour makes them wilder.</li>
+          <li><strong>Bond</strong>: keep it fed, clean, rested and happy. Neglect, exhaustion and forcing it to fight while tired darken its heart.</li>
+        </ul>
+        <h3>Evolution</h3>
+        <ul>
+          <li><strong>Juvenile</strong> (day 4): 12 forms = training focus × temperament (Disciplined / Wild).</li>
+          <li><strong>Adult</strong> (day 10, 3 battles): 24 forms = + battle style (Aggressive / Tactical).</li>
+          <li><strong>Apex</strong> (day 18, 8 battles): 48 forms = + bond (Radiant / Shadow).</li>
+        </ul>
+        <p>Every decision is re-judged at each evolution, so two identical hatchlings can split into completely different creatures,
+          and two different hatchlings raised the same way can end up as the same species (keeping their own element colours).</p>
+        <h3>Battle</h3>
+        <ul>
+          <li>Unlocked at the Juvenile stage. Strike and Frenzy are <em>aggressive</em>; Guard, Focus and Feint are <em>tactical</em>.</li>
+          <li>The moves you use decide its battle style and also train it: aggressive moves build Fury &amp; Might, tactical ones Wit &amp; Guard.</li>
+          <li>Elements matter: Water › Fire › Nature › Earth › Storm › Wind › Water.</li>
+        </ul>
+      </div>
+    </template>
+
+    <script src="js/data.js"></script>
+    <script src="js/creature.js"></script>
+    <script src="js/battle.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/game.js"></script>
+  </body>
+</html>

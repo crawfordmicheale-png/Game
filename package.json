@@ -1,0 +1,10 @@
+{
+  "name": "wildbrood",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A creature raising, evolving and battling game where how you raise a creature decides what it becomes.",
+  "scripts": {
+    "start": "npx --yes http-server -c-1 -p 8080 .",
+    "test": "node --test tests/*.test.js"
+  }
+}
